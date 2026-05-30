@@ -535,7 +535,7 @@
 
     try {
       const submissionId = Date.now().toString();
-      const photoRef = ref(storage, `electrical/job_photos/${submissionId}/${selectedPhoto.name}`);
+      const photoRef = ref(storage, `job_photos/${submissionId}/${selectedPhoto.name}`);
       const uploadTask = uploadBytesResumable(photoRef, selectedPhoto);
 
       const photoURL = await new Promise((resolve, reject) => {
