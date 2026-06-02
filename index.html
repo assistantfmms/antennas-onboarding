@@ -1,703 +1,651 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jim's Electrical — Job Submission</title>
-<style>
-  :root {
-    --primary: #004F96;
-    --primary-dark: #003d75;
-    --primary-light: #e8f1fa;
-    --bg: #f8fafc;
-    --surface: #ffffff;
-    --border: #e2e8f0;
-    --border-focus: #004F96;
-    --text: #1e293b;
-    --muted: #64748b;
-    --error: #ef4444;
-    --radius: 10px;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); min-height: 100vh; padding-bottom: 40px; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Franchisee Onboarding – Jim's</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .header { background: #ffffff; border-bottom: 2px solid #004F96; padding: 14px 20px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-  .header-logo img { height: 60px; width: auto; display: block; }
-  .header-divider { width: 1px; height: 36px; background: #e2e8f0; }
-  .header-text h1 { color: #1e293b; font-size: 15px; font-weight: 700; }
-  .header-text p { color: #64748b; font-size: 11px; margin-top: 1px; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #1a1a2e;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-  .progress-bar { height: 3px; background: var(--border); position: sticky; top: 76px; z-index: 99; }
-  .progress-fill { height: 100%; background: var(--primary); transition: width 0.4s ease; width: 0%; }
+    .page-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #1565a7;
+      border-radius: 6px;
+      padding: 28px 32px 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
 
-  .container { max-width: 640px; margin: 0 auto; padding: 24px 16px; }
+    /* ── Header ── */
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .page-header img {
+      width: 90px;
+      height: auto;
+    }
+    .page-header-text h1 {
+      font-size: 26px;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 4px;
+    }
+    .page-header-text p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+    }
 
-  .section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
-  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-  .section-num { width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #ffffff; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .section-title { font-weight: 700; font-size: 15px; color: var(--text); }
-  .section-sub { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
+    /* ── Section headings ── */
+    .section-heading {
+      font-size: 17px;
+      font-weight: bold;
+      color: white;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      margin: 28px 0 16px;
+    }
+    .section-heading:first-of-type { margin-top: 0; }
 
-  .field { margin-bottom: 16px; }
-  .field:last-child { margin-bottom: 0; }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    /* ── 3-column field grid ── */
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px 16px;
+    }
+    .field-grid .col-2 { grid-column: span 2; }
+    .field-grid .col-3 { grid-column: span 3; }
+    .field-grid .col-1 { grid-column: span 1; }
 
-  label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.3px; }
-  label .req { color: var(--primary-dark); margin-left: 2px; }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .field-group label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+    }
 
-  input[type="text"], input[type="number"], input[type="password"], select, textarea {
-    width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 8px;
-    font-size: 14px; color: var(--text); background: #fff; outline: none; transition: border-color 0.2s;
-    -webkit-appearance: none; appearance: none;
-  }
-  input:focus, select:focus, textarea:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px rgba(0,79,150,0.1); }
-  textarea { resize: vertical; min-height: 80px; font-family: inherit; }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 3px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      color: #111;
+      background: white;
+    }
+    input:focus, select:focus {
+      outline: 2px solid rgba(255,255,255,0.6);
+      outline-offset: 1px;
+    }
+    input[type="date"] { color: #555; }
 
-  .choice-group { display: flex; flex-direction: column; gap: 8px; }
-  .choice-btn { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s; background: #fff; font-size: 13.5px; font-weight: 500; color: var(--text); user-select: none; }
-  .choice-btn:hover { border-color: var(--primary); background: var(--primary-light); }
-  .choice-btn.selected { border-color: var(--primary); background: var(--primary-light); color: #003d75; font-weight: 600; }
-  .choice-btn input[type="radio"] { display: none; }
-  .choice-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0; transition: all 0.15s; }
-  .choice-btn.selected .choice-dot { border-color: var(--primary-dark); background: var(--primary); box-shadow: inset 0 0 0 3px #e8f1fa; }
-  .choice-btn .emoji { font-size: 16px; }
+    /* ── Uploads ── */
+    .uploads-note {
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
 
-  .upload-zone { border: 2px dashed var(--border); border-radius: var(--radius); padding: 28px 20px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fafafa; position: relative; }
-  .upload-zone:hover, .upload-zone.dragover { border-color: var(--primary); background: var(--primary-light); }
-  .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
-  .upload-icon { font-size: 32px; margin-bottom: 8px; }
-  .upload-title { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 4px; }
-  .upload-sub { font-size: 12px; color: var(--muted); }
-  .upload-preview { margin-top: 12px; display: none; border-radius: 8px; overflow: hidden; position: relative; }
-  .upload-preview img { width: 100%; max-height: 240px; object-fit: cover; display: block; }
-  .upload-preview .remove-btn { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6); color: #fff; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+    .upload-list { display: flex; flex-direction: column; gap: 2px; }
 
-  .hint { font-size: 11.5px; color: var(--muted); margin-top: 5px; line-height: 1.4; }
-  .error-msg { font-size: 12px; color: var(--error); margin-top: 5px; display: none; }
+    .upload-row {
+      background: #0f4c8a;
+      border: 1px dashed rgba(255,255,255,0.3);
+      border-radius: 3px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.15s;
+    }
+    .upload-row:hover { background: #0d3f75; }
+    .upload-row input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    .upload-row-left { pointer-events: none; }
+    .upload-row-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+    }
+    .upload-row-meta {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      margin-top: 2px;
+    }
+    .upload-row-meta.req { color: #f9a825; }
+    .upload-row-right {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .upload-row-right.chosen { color: #a5d6a7; font-style: italic; }
 
-  .upload-progress { margin-top: 10px; display: none; }
-  .upload-progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-  .upload-progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s; border-radius: 2px; }
-  .upload-progress-text { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    /* ── Uniform hint ── */
+    .uniform-hint {
+      display: none;
+      grid-column: 1 / -1;
+      background: rgba(249,168,37,0.15);
+      border: 1px solid #f9a825;
+      border-radius: 3px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #f9a825;
+      font-weight: bold;
+    }
 
-  .submit-btn { width: 100%; padding: 16px; background: var(--primary); color: #ffffff; border: none; border-radius: var(--radius); font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
-  .submit-btn:hover { background: var(--primary-dark); color: #fff; transform: translateY(-1px); }
-  .submit-btn:active { transform: translateY(0); }
-  .submit-btn:disabled { background: #cbd5e1; color: #fff; cursor: not-allowed; transform: none; }
+    /* ── Submit ── */
+    .submit-row {
+      margin-top: 28px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .btn-clear {
+      padding: 10px 22px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 3px;
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-clear:hover { background: rgba(255,255,255,0.08); }
+    .btn-submit {
+      padding: 10px 28px;
+      background: #f9a825;
+      border: none;
+      border-radius: 3px;
+      color: #111;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-submit:hover { background: #f57f17; color: white; }
 
-  .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+    /* ── Toast ── */
+    .toast {
+      display: none;
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: #1b5e20;
+      color: white;
+      padding: 13px 20px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: bold;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      z-index: 9999;
+    }
+    .toast.show { display: block; }
 
-  .success-card { display: none; text-align: center; padding: 48px 24px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
-  .success-icon { font-size: 56px; margin-bottom: 16px; }
-  .success-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
-  .success-sub { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 380px; margin: 0 auto; }
-  .success-ref { margin-top: 20px; padding: 12px 20px; background: #e8f1fa; border-radius: 8px; font-size: 12px; color: #003d75; font-weight: 600; }
-
-  @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
-</style>
+    @media (max-width: 640px) {
+      .field-grid { grid-template-columns: 1fr 1fr; }
+      .field-grid .col-3 { grid-column: span 2; }
+    }
+    @media (max-width: 420px) {
+      .field-grid { grid-template-columns: 1fr; }
+      .field-grid .col-2, .field-grid .col-3 { grid-column: span 1; }
+      .page-wrap { padding: 18px 16px 32px; }
+    }
+  </style>
 </head>
 <body>
+<div class="page-wrap">
 
-<div class="header">
-  <div class="header-logo">
-    <img src="image__5_.png" alt="Jim's Electrical">
-  </div>
-  <div class="header-divider"></div>
-  <div class="header-text">
-    <h1>Job Submission Portal</h1>
-    <p>Submit a completed job for GBP posting</p>
-  </div>
-</div>
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-
-<div class="container">
-
-  <div class="success-card" id="successCard">
-    <div class="success-icon">✅</div>
-    <div class="success-title">Submission received!</div>
-    <div class="success-sub">Your job has been submitted. It will be reviewed before going live on your Jim's Electrical Google Business Profile.</div>
-    <div class="success-ref" id="successRef"></div>
+  <!-- Header -->
+  <div class="page-header">
+    <img src="https://c7qp5bn42g-maker.github.io/Franchisee-Portal/jims-electrical-logo.png"
+         onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'"
+         alt="Jim's Electrical" />
+    <div id="logo-fallback" style="display:none;width:80px;height:80px;background:#0d3f75;border-radius:4px;align-items:center;justify-content:center;flex-shrink:0;">
+      <span style="color:white;font-size:11px;font-weight:bold;text-align:center;line-height:1.3;">Jim's<br>Electrical</span>
+    </div>
+    <div class="page-header-text">
+      <h1>Franchisee Information</h1>
+      <p>Please complete all relevant sections and upload the required images.</p>
+    </div>
   </div>
 
-  <form id="jobForm" novalidate>
+  <form id="onboardingForm" novalidate>
 
-    <!-- SECTION 1: FRANCHISE -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-num">1</div>
-        <div>
-          <div class="section-title">Your Franchise</div>
-          <div class="section-sub">Select your franchise and enter your PIN</div>
-        </div>
+    <!-- Personal Details -->
+    <div class="section-heading">Personal Details</div>
+    <div class="field-grid">
+      <div class="field-group">
+        <label>First name</label>
+        <input type="text" name="first_name" />
       </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Franchise <span class="req">*</span></label>
-          <select id="franchisee" required>
-            <option value="">Select your franchise...</option>
-            <option>Jim's Electrical (Concord)</option>
-            <option>Jim's Electrical (Glen Iris)</option>
-            <option>Jim's Electrical (Port Adelaide)</option>
-            <option>Jim's Electrical (Essendon)</option>
-            <option>Jim's Electrical (Sutherland)</option>
-            <option>Jim's Electrical (Ferntree Gully)</option>
-            <option>Jim's Electrical (Perth)</option>
-            <option>Jim's Electrical (Morley)</option>
-            <option>Jim's Electrical (Tullamarine)</option>
-            <option>Jim's Electrical (Reservoir)</option>
-            <option>Jim's Electrical (St Kilda)</option>
-            <option>Jim's Electrical (Mascot)</option>
-            <option>Jim's Electrical (Newcastle)</option>
-            <option>Jim's Electrical (South Yarra)</option>
-            <option>Jim's Electrical (Ballarat East)</option>
-            <option>Jim's Electrical (Bentleigh East)</option>
-            <option>Jim's Electrical (Collingwood Park)</option>
-            <option>Jim's Electrical (Hurstville)</option>
-            <option>Jim's Electrical (Blacktown)</option>
-            <option>Jim's Electrical (Lilydale)</option>
-            <option>Jim's Electrical (Ringwood)</option>
-            <option>Jim's Electrical (Doreen)</option>
-            <option>Jim's Electrical (Pimpama)</option>
-            <option>Jim's Electrical (Springvale)</option>
-            <option>Jim's Electrical (Castle Hill)</option>
-            <option>Jim's Electrical (Caloundra)</option>
-            <option>Jim's Electrical (Norwood)</option>
-            <option>Jim's Electrical (Henley Beach)</option>
-            <option>Jim's Electrical (Kellyville)</option>
-            <option>Jim's Electrical (Ingleburn)</option>
-            <option>Jim's Electrical (Charlestown)</option>
-            <option>Jim's Electrical (Mornington)</option>
-            <option>Jim's Electrical (Campbelltown)</option>
-            <option>Jim's Electrical (Hastings)</option>
-            <option>Jim's Electrical (Success)</option>
-          </select>
-          <div class="error-msg" id="err-franchisee">Please select your franchise</div>
-        </div>
-        <div class="field">
-          <label>Submission PIN <span class="req">*</span></label>
-          <input type="password" id="pin" placeholder="Enter your 4-digit PIN" maxlength="4" inputmode="numeric" required>
-          <div class="hint">Your unique PIN — contact the office if you don't have one</div>
-          <div class="error-msg" id="err-pin">Please enter your 4-digit PIN</div>
-        </div>
+      <div class="field-group">
+        <label>Middle name</label>
+        <input type="text" name="middle_name" />
+      </div>
+      <div class="field-group">
+        <label>Surname</label>
+        <input type="text" name="surname" />
+      </div>
+      <div class="field-group">
+        <label>Email</label>
+        <input type="email" name="email" />
+      </div>
+      <div class="field-group">
+        <label>Mobile</label>
+        <input type="tel" name="mobile" />
+      </div>
+      <div class="field-group">
+        <label>Date of birth</label>
+        <input type="date" name="dob" />
       </div>
     </div>
 
-    <!-- SECTION 2: LOCATION -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-num">2</div>
-        <div>
-          <div class="section-title">Job Location</div>
-          <div class="section-sub">Used in the GBP post and blog for local SEO</div>
-        </div>
+    <!-- Residential Address -->
+    <div class="section-heading">Residential Address</div>
+    <div class="field-grid">
+      <div class="field-group">
+        <label>Street number</label>
+        <input type="text" name="res_street_no" />
       </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Suburb <span class="req">*</span></label>
-          <input type="text" id="suburb" placeholder="e.g. Norwood" required>
-          <div class="error-msg" id="err-suburb">Please enter the suburb</div>
-        </div>
-        <div class="field">
-          <label>State <span class="req">*</span></label>
-          <select id="state" required>
-            <option value="">Select state...</option>
-            <option>VIC</option>
-            <option>NSW</option>
-            <option>QLD</option>
-            <option>SA</option>
-            <option>WA</option>
-            <option>TAS</option>
-            <option>NT</option>
-            <option>ACT</option>
-          </select>
-          <div class="error-msg" id="err-state">Please select a state</div>
-        </div>
+      <div class="field-group">
+        <label>Street name</label>
+        <input type="text" name="res_street_name" />
       </div>
-    </div>
-
-    <!-- SECTION 3: JOB TYPE -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-num">3</div>
-        <div>
-          <div class="section-title">Job Type</div>
-          <div class="section-sub">Select the primary type of work completed</div>
-        </div>
+      <div class="field-group">
+        <label>Suburb</label>
+        <input type="text" name="res_suburb" />
       </div>
-      <div class="field">
-        <div class="choice-group" id="jobTypeGroup">
-
-          <div style="margin: 0 0 4px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding-left: 2px;">Lighting</div>
-          <label class="choice-btn" id="jt-pendant">
-            <input type="radio" name="jobType" value="pendant_light_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">💡</span>
-            Pendant Light Installation
-          </label>
-          <label class="choice-btn" id="jt-chandelier">
-            <input type="radio" name="jobType" value="chandelier_lighting_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">✨</span>
-            Chandelier Lighting Installation
-          </label>
-          <label class="choice-btn" id="jt-outdoor-lighting">
-            <input type="radio" name="jobType" value="outdoor_lighting_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🌿</span>
-            Outdoor Lighting Installation
-          </label>
-          <label class="choice-btn" id="jt-security-sensor">
-            <input type="radio" name="jobType" value="security_sensor_light_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🔦</span>
-            Security Sensor Light Installation
-          </label>
-          <label class="choice-btn" id="jt-floodlight-camera">
-            <input type="radio" name="jobType" value="floodlight_camera_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">📷</span>
-            Floodlight Camera Installation
-          </label>
-          <label class="choice-btn" id="jt-ceiling-fan-light">
-            <input type="radio" name="jobType" value="ceiling_fan_light_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">💨</span>
-            Ceiling Fan &amp; Light Installation
-          </label>
-          <label class="choice-btn" id="jt-strip-lighting">
-            <input type="radio" name="jobType" value="strip_lighting_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">〰️</span>
-            Strip Lighting Installation
-          </label>
-          <label class="choice-btn" id="jt-led-downlights">
-            <input type="radio" name="jobType" value="led_downlights_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">⬤</span>
-            LED Downlights Installation
-          </label>
-          <label class="choice-btn" id="jt-stairs-lighting">
-            <input type="radio" name="jobType" value="stairs_lighting_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🪜</span>
-            Stairs Lighting Installation
-          </label>
-
-          <div style="margin: 8px 0 4px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding-left: 2px;">Ceiling Fans</div>
-          <label class="choice-btn" id="jt-ceiling-fan">
-            <input type="radio" name="jobType" value="ceiling_fan_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">💨</span>
-            Ceiling Fan Installation
-          </label>
-
-          <div style="margin: 8px 0 4px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding-left: 2px;">Bathroom</div>
-          <label class="choice-btn" id="jt-exhaust-fan">
-            <input type="radio" name="jobType" value="exhaust_fan_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🌀</span>
-            Exhaust Fan Installation
-          </label>
-          <label class="choice-btn" id="jt-3in1-bathroom">
-            <input type="radio" name="jobType" value="3_in_1_bathroom_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🛁</span>
-            3-in-1 Bathroom Installation
-          </label>
-          <label class="choice-btn" id="jt-bathroom-lighting">
-            <input type="radio" name="jobType" value="bathroom_lighting_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🪥</span>
-            Bathroom Lighting Installation
-          </label>
-
-          <div style="margin: 8px 0 4px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding-left: 2px;">Kitchen &amp; Appliances</div>
-          <label class="choice-btn" id="jt-kitchen-lighting">
-            <input type="radio" name="jobType" value="kitchen_lighting_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🍽️</span>
-            Kitchen Lighting Installation
-          </label>
-          <label class="choice-btn" id="jt-rangehood">
-            <input type="radio" name="jobType" value="kitchen_rangehood_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🔲</span>
-            Kitchen Rangehood Installation
-          </label>
-          <label class="choice-btn" id="jt-rangehood-lighting">
-            <input type="radio" name="jobType" value="rangehood_lighting_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">💡</span>
-            Rangehood &amp; Lighting Installation
-          </label>
-          <label class="choice-btn" id="jt-oven-replacement">
-            <input type="radio" name="jobType" value="oven_replacement_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🍳</span>
-            Oven Replacement Installation
-          </label>
-          <label class="choice-btn" id="jt-oven-cooktop">
-            <input type="radio" name="jobType" value="oven_cooktop_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🔥</span>
-            Oven &amp; Cooktop Installation
-          </label>
-          <label class="choice-btn" id="jt-air-conditioner">
-            <input type="radio" name="jobType" value="air_conditioner_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">❄️</span>
-            Air Conditioner Installation
-          </label>
-
-          <div style="margin: 8px 0 4px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding-left: 2px;">Power Outlets &amp; Switchboards</div>
-          <label class="choice-btn" id="jt-power-outlet">
-            <input type="radio" name="jobType" value="power_outlet_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🔌</span>
-            Power Outlet Installation
-          </label>
-          <label class="choice-btn" id="jt-outdoor-power-outlet">
-            <input type="radio" name="jobType" value="outdoor_power_outlet_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🔌</span>
-            Outdoor Power Outlet Installation
-          </label>
-          <label class="choice-btn" id="jt-switchboard-upgrade">
-            <input type="radio" name="jobType" value="switchboard_upgrade_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">⚡</span>
-            Switchboard Upgrade Installation
-          </label>
-
-          <div style="margin: 8px 0 4px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding-left: 2px;">EV Chargers</div>
-          <label class="choice-btn" id="jt-ev-charger">
-            <input type="radio" name="jobType" value="ev_charger_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🚗</span>
-            EV Charger Installation
-          </label>
-
-          <div style="margin: 8px 0 4px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding-left: 2px;">Smoke &amp; Safety</div>
-          <label class="choice-btn" id="jt-smoke-detector">
-            <input type="radio" name="jobType" value="smoke_detector_installation">
-            <div class="choice-dot"></div>
-            <span class="emoji">🚨</span>
-            Smoke Detector Installation
-          </label>
-
-          <div style="margin: 8px 0 4px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding-left: 2px;">Other</div>
-          <label class="choice-btn" id="jt-custom">
-            <input type="radio" name="jobType" value="custom">
-            <div class="choice-dot"></div>
-            <span class="emoji">✏️</span>
-            Other / Custom Job Type
-          </label>
-          <div id="customJobTypeWrap" style="display:none; margin-top: 8px;">
-            <input type="text" id="customJobType" placeholder="e.g. Heated Towel Rail Installation" maxlength="80">
-            <div class="hint">Enter the job type heading exactly as it should appear on the post</div>
-            <div class="error-msg" id="err-customjobtype">Please describe the job type</div>
-          </div>
-
-        </div>
-        <div class="error-msg" id="err-jobtype">Please select the job type</div>
+      <div class="field-group">
+        <label>Postcode</label>
+        <input type="text" name="res_postcode" />
       </div>
-    </div>
-
-    <!-- SECTION 4: JOB DETAILS -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-num">4</div>
-        <div>
-          <div class="section-title">Job Details</div>
-          <div class="section-sub">Help Claude write accurate copy</div>
-        </div>
-      </div>
-      <div class="field">
-        <label>Customer Type</label>
-        <select id="customerType">
-          <option value="">Select type...</option>
-          <option>Residential</option>
-          <option>Commercial</option>
-          <option>Industrial</option>
-          <option>Rental / Property Manager</option>
-          <option>Strata / Body Corporate</option>
+      <div class="field-group">
+        <label>State</label>
+        <select name="res_state">
+          <option value="">Select...</option>
+          <option>NSW</option><option>Vic</option><option>Qld</option>
+          <option>SA</option><option>WA</option><option>Tas</option>
+          <option>NT</option><option>ACT</option>
         </select>
       </div>
-      <div class="field">
-        <label>What was the problem / what did you do?</label>
-        <input type="text" id="problemDesc" placeholder="e.g. Installed 3-phase EV charger in garage, upgraded switchboard">
-        <div class="hint">Used by Claude to write specific, useful post copy</div>
+    </div>
+
+    <!-- Postal Address -->
+    <div class="section-heading">Postal Address - if different to residential</div>
+    <div class="field-grid">
+      <div class="field-group">
+        <label>Street number</label>
+        <input type="text" name="post_street_no" />
+      </div>
+      <div class="field-group">
+        <label>Street name</label>
+        <input type="text" name="post_street_name" />
+      </div>
+      <div class="field-group">
+        <label>Suburb</label>
+        <input type="text" name="post_suburb" />
+      </div>
+      <div class="field-group">
+        <label>Postcode</label>
+        <input type="text" name="post_postcode" />
+      </div>
+      <div class="field-group">
+        <label>State</label>
+        <select name="post_state">
+          <option value="">Select...</option>
+          <option>NSW</option><option>Vic</option><option>Qld</option>
+          <option>SA</option><option>WA</option><option>Tas</option>
+          <option>NT</option><option>ACT</option>
+        </select>
       </div>
     </div>
 
-    <!-- SECTION 5: PHOTO -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-num">5</div>
-        <div>
-          <div class="section-title">Job Photo</div>
-          <div class="section-sub">Used as the base for the branded GBP image</div>
-        </div>
+    <!-- Emergency Contact -->
+    <div class="section-heading">Emergency Contact</div>
+    <div class="field-grid">
+      <div class="field-group">
+        <label>Name</label>
+        <input type="text" name="emerg_name" />
       </div>
-      <div class="field">
-        <div class="upload-zone" id="uploadZone">
-          <input type="file" id="photoInput" accept="image/*" capture="environment">
-          <div class="upload-icon">📸</div>
-          <div class="upload-title">Tap to take photo or upload</div>
-          <div class="upload-sub">JPG, PNG or HEIC · Max 20MB</div>
-        </div>
-        <div class="upload-preview" id="uploadPreview">
-          <img id="previewImg" src="" alt="Preview">
-          <button type="button" class="remove-btn" id="removePhotoBtn">✕</button>
-        </div>
-        <div class="upload-progress" id="uploadProgress">
-          <div class="upload-progress-bar"><div class="upload-progress-fill" id="uploadProgressFill"></div></div>
-          <div class="upload-progress-text" id="uploadProgressText">Uploading...</div>
-        </div>
-        <div class="hint">Best results: completed work clearly visible, no faces, good lighting</div>
-        <div class="error-msg" id="err-photo">Please upload a photo of the job</div>
+      <div class="field-group">
+        <label>Mobile</label>
+        <input type="tel" name="emerg_mobile" />
+      </div>
+      <div class="field-group">
+        <label>Relationship</label>
+        <input type="text" name="emerg_relationship" />
       </div>
     </div>
 
-    <!-- SECTION 6: NOTES -->
-    <div class="section">
-      <div class="section-header">
-        <div class="section-num">6</div>
-        <div>
-          <div class="section-title">Extra Notes</div>
-          <div class="section-sub">Optional — anything else worth mentioning</div>
-        </div>
+    <!-- Business Details -->
+    <div class="section-heading">Business Details</div>
+    <div class="field-grid">
+      <div class="field-group">
+        <label>ABN</label>
+        <input type="text" name="abn" />
       </div>
-      <div class="field">
-        <label>Additional notes for the post</label>
-        <textarea id="notes" placeholder="e.g. Heritage property, after-hours callout, complex switchboard upgrade, customer very happy..." maxlength="200"></textarea>
-        <div class="hint">Max 200 characters</div>
+      <div class="field-group">
+        <label>ACN</label>
+        <input type="text" name="acn" />
+      </div>
+      <div class="field-group">
+        <label>Registered street number</label>
+        <input type="text" name="biz_street_no" />
+      </div>
+      <div class="field-group">
+        <label>Registered street name</label>
+        <input type="text" name="biz_street_name" />
+      </div>
+      <div class="field-group">
+        <label>Registered suburb</label>
+        <input type="text" name="biz_suburb" />
+      </div>
+      <div class="field-group">
+        <label>Registered postcode</label>
+        <input type="text" name="biz_postcode" />
+      </div>
+      <div class="field-group">
+        <label>Registered state</label>
+        <select name="biz_state">
+          <option value="">Select...</option>
+          <option>NSW</option><option>Vic</option><option>Qld</option>
+          <option>SA</option><option>WA</option><option>Tas</option>
+          <option>NT</option><option>ACT</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Director 1</label>
+        <input type="text" name="director_1" />
+      </div>
+      <div class="field-group">
+        <label>Director 2</label>
+        <input type="text" name="director_2" />
       </div>
     </div>
 
-    <button type="submit" class="submit-btn" id="submitBtn">
-      <span id="submitText">Submit Job</span>
-      <div class="spinner" id="submitSpinner"></div>
-    </button>
+    <!-- Licences & Registrations -->
+    <div class="section-heading">Licences &amp; Registrations</div>
+    <div class="field-grid">
+      <div class="field-group">
+        <label>White card number</label>
+        <input type="text" name="white_card" />
+      </div>
+      <div class="field-group">
+        <label>Open registration number</label>
+        <input type="text" name="open_reg" />
+      </div>
+      <div class="field-group">
+        <label>Security installer number</label>
+        <input type="text" name="sec_installer" />
+      </div>
+      <div class="field-group">
+        <label>Security reseller number</label>
+        <input type="text" name="sec_reseller" />
+      </div>
+      <div class="field-group">
+        <label>Electrical worker number</label>
+        <input type="text" name="elec_worker" />
+      </div>
+      <div class="field-group">
+        <label>Electrical contractor number</label>
+        <input type="text" name="elec_contractor" />
+      </div>
+    </div>
+
+    <!-- Vehicle Details -->
+    <div class="section-heading">Vehicle Details</div>
+    <div class="field-grid">
+      <div class="field-group">
+        <label>Make</label>
+        <input type="text" name="veh_make" />
+      </div>
+      <div class="field-group">
+        <label>Model</label>
+        <input type="text" name="veh_model" />
+      </div>
+      <div class="field-group">
+        <label>Year</label>
+        <input type="text" name="veh_year" />
+      </div>
+      <div class="field-group col-3">
+        <label>Variant</label>
+        <input type="text" name="veh_variant" />
+      </div>
+    </div>
+
+    <!-- Uniform -->
+    <div class="section-heading">Uniform</div>
+    <div class="field-grid">
+      <div class="field-group">
+        <label>Shirt size</label>
+        <select name="shirt_size">
+          <option value="">Select...</option>
+          <option>M</option><option>L</option><option>XL</option>
+          <option>XXL</option><option>XXXL</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Waist size (cm)</label>
+        <input type="text" name="waist_size" />
+      </div>
+      <div class="field-group">
+        <label>Number of shorts</label>
+        <select name="num_shorts" id="num_shorts" onchange="updateUniformOptions()">
+          <option value="">Select...</option>
+          <option>1</option><option>2</option><option>3</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Number of pants</label>
+        <select name="num_pants" id="num_pants" onchange="updateUniformOptions()">
+          <option value="">Select...</option>
+          <option>1</option><option>2</option><option>3</option>
+        </select>
+      </div>
+      <div class="uniform-hint" id="uniform_hint">
+        Maximum 3 items total (shorts + pants combined).
+      </div>
+    </div>
+
+    <!-- Required Uploads -->
+    <div class="section-heading">Required uploads</div>
+    <p class="uploads-note">Please upload clear photos or scans of each required document. If using a mobile you can take a picture of required document using phone camera.</p>
+
+    <div class="upload-list">
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Driver licence – front</div>
+          <div class="upload-row-meta req">Image (required)</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Driver licence – back</div>
+          <div class="upload-row-meta req">Image (required)</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Vehicle – front</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Vehicle – driver side</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Vehicle – rear</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Vehicle – passenger side</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">White card</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Open registration</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Security installer licence</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Security reseller licence</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Electrical worker licence</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Electrical contractor licence</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-row">
+      <button type="button" class="btn-clear" onclick="resetForm()">Clear form</button>
+      <button type="submit" class="btn-submit">Submit application</button>
+    </div>
 
   </form>
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+<div class="toast" id="toast">✓ Application submitted successfully!</div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDp8s_V-hDsqEXTkrvE7ps5JYs9HpNjomI",
-    authDomain: "energy-job-portal.firebaseapp.com",
-    projectId: "energy-job-portal",
-    storageBucket: "energy-job-portal.firebasestorage.app",
-    messagingSenderId: "817654224716",
-    appId: "1:817654224716:web:93f4b70b273bf7ff1e21e9"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const storage = getStorage(app);
-
-  const PINS = {
-    "Jim's Electrical (Concord)":          "3001",
-    "Jim's Electrical (Glen Iris)":         "3002",
-    "Jim's Electrical (Port Adelaide)":     "3003",
-    "Jim's Electrical (Essendon)":          "3004",
-    "Jim's Electrical (Sutherland)":        "3005",
-    "Jim's Electrical (Ferntree Gully)":    "3006",
-    "Jim's Electrical (Perth)":             "3007",
-    "Jim's Electrical (Morley)":            "3008",
-    "Jim's Electrical (Tullamarine)":       "3009",
-    "Jim's Electrical (Reservoir)":         "3010",
-    "Jim's Electrical (St Kilda)":          "3011",
-    "Jim's Electrical (Mascot)":            "3012",
-    "Jim's Electrical (Newcastle)":         "3013",
-    "Jim's Electrical (South Yarra)":       "3014",
-    "Jim's Electrical (Ballarat East)":     "3015",
-    "Jim's Electrical (Bentleigh East)":    "3016",
-    "Jim's Electrical (Collingwood Park)":  "3017",
-    "Jim's Electrical (Hurstville)":        "3018",
-    "Jim's Electrical (Blacktown)":         "3019",
-    "Jim's Electrical (Lilydale)":          "3020",
-    "Jim's Electrical (Ringwood)":          "3021",
-    "Jim's Electrical (Doreen)":            "3022",
-    "Jim's Electrical (Pimpama)":           "3023",
-    "Jim's Electrical (Springvale)":        "3024",
-    "Jim's Electrical (Castle Hill)":       "3025",
-    "Jim's Electrical (Caloundra)":         "3026",
-    "Jim's Electrical (Norwood)":           "3027",
-    "Jim's Electrical (Henley Beach)":      "3028",
-    "Jim's Electrical (Kellyville)":        "3029",
-    "Jim's Electrical (Ingleburn)":         "3030",
-    "Jim's Electrical (Charlestown)":       "3031",
-    "Jim's Electrical (Mornington)":        "3032",
-    "Jim's Electrical (Campbelltown)":      "3033",
-    "Jim's Electrical (Hastings)":          "3034",
-    "Jim's Electrical (Success)":           "3035",
-  };
-
-  let selectedPhoto = null;
-
-  // ── JOB TYPE HANDLERS ──
-  const jobTypeIds = ['jt-pendant','jt-chandelier','jt-outdoor-lighting','jt-security-sensor','jt-floodlight-camera','jt-ceiling-fan-light','jt-strip-lighting','jt-led-downlights','jt-stairs-lighting','jt-ceiling-fan','jt-exhaust-fan','jt-3in1-bathroom','jt-bathroom-lighting','jt-kitchen-lighting','jt-rangehood','jt-rangehood-lighting','jt-oven-replacement','jt-oven-cooktop','jt-air-conditioner','jt-power-outlet','jt-outdoor-power-outlet','jt-switchboard-upgrade','jt-ev-charger','jt-smoke-detector','jt-custom'];
-  jobTypeIds.forEach(id => {
-    document.getElementById(id).addEventListener('click', () => {
-      document.querySelectorAll('#jobTypeGroup .choice-btn').forEach(b => b.classList.remove('selected'));
-      document.getElementById(id).classList.add('selected');
-      const isCustom = id === 'jt-custom';
-      document.getElementById('customJobTypeWrap').style.display = isCustom ? 'block' : 'none';
-      if (!isCustom) document.getElementById('err-customjobtype').style.display = 'none';
-      updateProgress();
-    });
-  });
-
-  // ── PHOTO HANDLERS ──
-  document.getElementById('photoInput').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    if (file.size > 20 * 1024 * 1024) { alert("Photo is too large. Please use an image under 20MB."); return; }
-    selectedPhoto = file;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      document.getElementById('previewImg').src = ev.target.result;
-      document.getElementById('uploadPreview').style.display = 'block';
-      document.getElementById('uploadZone').style.display = 'none';
-    };
-    reader.readAsDataURL(file);
-    updateProgress();
-  });
-
-  document.getElementById('removePhotoBtn').addEventListener('click', function() {
-    selectedPhoto = null;
-    document.getElementById('photoInput').value = '';
-    document.getElementById('uploadPreview').style.display = 'none';
-    document.getElementById('uploadZone').style.display = 'block';
-    updateProgress();
-  });
-
-  function updateProgress() {
-    let filled = 0;
-    const total = 5;
-    if (document.getElementById('franchisee').value) filled++;
-    if (document.getElementById('suburb').value) filled++;
-    if (document.getElementById('state').value) filled++;
-    const checkedJob = document.querySelector('input[name="jobType"]:checked');
-    const customVal = document.getElementById('customJobType') ? document.getElementById('customJobType').value.trim() : '';
-    if (checkedJob && (checkedJob.value !== 'custom' || customVal)) filled++;
-    if (selectedPhoto) filled++;
-    document.getElementById('progressFill').style.width = `${(filled / total) * 100}%`;
-  }
-
-  document.querySelectorAll('input, select, textarea').forEach(el => {
-    el.addEventListener('change', updateProgress);
-    el.addEventListener('input', updateProgress);
-  });
-
-  function validate() {
-    let valid = true;
-
-    [['franchisee','err-franchisee'],['suburb','err-suburb'],['state','err-state']].forEach(([id, err]) => {
-      const el = document.getElementById(id);
-      document.getElementById(err).style.display = el.value.trim() ? 'none' : 'block';
-      if (!el.value.trim()) valid = false;
-    });
-
-    const jobType = document.querySelector('input[name="jobType"]:checked');
-    document.getElementById('err-jobtype').style.display = jobType ? 'none' : 'block';
-    if (!jobType) valid = false;
-    if (jobType && jobType.value === 'custom') {
-      const customVal = document.getElementById('customJobType').value.trim();
-      document.getElementById('err-customjobtype').style.display = customVal ? 'none' : 'block';
-      if (!customVal) valid = false;
+<script>
+  function fileChosen(input) {
+    const row = input.closest('.upload-row');
+    const right = row.querySelector('.upload-row-right');
+    if (input.files && input.files[0]) {
+      right.textContent = input.files[0].name;
+      right.classList.add('chosen');
+    } else {
+      right.textContent = 'No file selected';
+      right.classList.remove('chosen');
     }
-
-    if (!selectedPhoto) { document.getElementById('err-photo').style.display = 'block'; valid = false; }
-    else { document.getElementById('err-photo').style.display = 'none'; }
-
-    const franchisee = document.getElementById('franchisee').value;
-    const pin = document.getElementById('pin').value;
-    const errPin = document.getElementById('err-pin');
-    if (!pin) {
-      errPin.textContent = 'Please enter your 4-digit PIN';
-      errPin.style.display = 'block'; valid = false;
-    } else if (franchisee && PINS[franchisee] !== pin) {
-      errPin.textContent = 'Incorrect PIN for this franchise';
-      errPin.style.display = 'block'; valid = false;
-    } else { errPin.style.display = 'none'; }
-
-    return valid;
   }
 
-  document.getElementById('jobForm').addEventListener('submit', async (e) => {
+  function resetForm() {
+    document.getElementById('onboardingForm').reset();
+    document.querySelectorAll('.upload-row-right').forEach(el => {
+      el.textContent = 'No file selected';
+      el.classList.remove('chosen');
+    });
+    document.getElementById('uniform_hint').style.display = 'none';
+  }
+
+  function updateUniformOptions() {
+    const shortsEl = document.getElementById('num_shorts');
+    const pantsEl  = document.getElementById('num_pants');
+    const hint     = document.getElementById('uniform_hint');
+    const MAX = 3;
+    const shorts = parseInt(shortsEl.value) || 0;
+    const pants  = parseInt(pantsEl.value)  || 0;
+
+    [shortsEl, pantsEl].forEach(sel => {
+      const other = sel === shortsEl ? pants : shorts;
+      Array.from(sel.options).forEach(opt => {
+        if (!opt.value) return;
+        opt.disabled = (other + parseInt(opt.value)) > MAX;
+      });
+      if (parseInt(sel.value) && (other + parseInt(sel.value)) > MAX) sel.value = '';
+    });
+
+    hint.style.display = (shorts + pants) > MAX ? 'block' : 'none';
+  }
+
+  document.getElementById('onboardingForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    if (!validate()) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-
-    const btn = document.getElementById('submitBtn');
-    const spinner = document.getElementById('submitSpinner');
-    const btnText = document.getElementById('submitText');
-    btn.disabled = true;
-    spinner.style.display = 'block';
-    btnText.textContent = 'Uploading photo...';
-
-    try {
-      const submissionId = Date.now().toString();
-      const photoRef = ref(storage, `electrical/job_photos/${submissionId}/${selectedPhoto.name}`);
-      const uploadTask = uploadBytesResumable(photoRef, selectedPhoto);
-
-      const photoURL = await new Promise((resolve, reject) => {
-        const progressBar = document.getElementById('uploadProgress');
-        const progressFill = document.getElementById('uploadProgressFill');
-        const progressText = document.getElementById('uploadProgressText');
-        progressBar.style.display = 'block';
-        uploadTask.on('state_changed',
-          (snapshot) => {
-            const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            progressFill.style.width = pct + '%';
-            progressText.textContent = `Uploading photo... ${pct}%`;
-          },
-          reject,
-          async () => { resolve(await getDownloadURL(uploadTask.snapshot.ref)); }
-        );
-      });
-
-      btnText.textContent = 'Saving submission...';
-
-      await addDoc(collection(db, 'job_submissions'), {
-        submission_id: submissionId,
-        division: 'electrical',
-        timestamp: serverTimestamp(),
-        franchisee: document.getElementById('franchisee').value,
-        suburb: document.getElementById('suburb').value.trim(),
-        state: document.getElementById('state').value,
-        job_type: (() => {
-          const checked = document.querySelector('input[name="jobType"]:checked');
-          if (checked.value === 'custom') return document.getElementById('customJobType').value.trim();
-          return checked.value;
-        })(),
-        customer_type: document.getElementById('customerType').value || null,
-        problem_description: document.getElementById('problemDesc').value.trim() || null,
-        notes: document.getElementById('notes').value.trim() || null,
-        photo_url: photoURL,
-        photo_filename: selectedPhoto.name,
-        status: 'pending_review',
-      });
-
-      document.getElementById('jobForm').style.display = 'none';
-      document.getElementById('successCard').style.display = 'block';
-      document.getElementById('successRef').textContent = `Reference: ${submissionId} · ${document.getElementById('franchisee').value}`;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    } catch (error) {
-      console.error('Submission error:', error);
-      alert('Something went wrong. Please try again.\n\nError: ' + error.message);
-      btn.disabled = false;
-      spinner.style.display = 'none';
-      btnText.textContent = 'Submit Job';
-    }
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
   });
 </script>
 </body>
