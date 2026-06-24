@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Franchisee Onboarding – Jim's</title>
+  <title>Franchisee Onboarding – Jim's Antennas &amp; Security</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -31,7 +31,7 @@
       margin-bottom: 28px;
     }
     .page-header img {
-      width: 90px;
+      width: 120px;
       height: auto;
     }
     .page-header-text h1 {
@@ -160,6 +160,27 @@
       font-weight: bold;
     }
 
+    /* ── Status banner ── */
+    .status-banner {
+      display: none;
+      margin-top: 20px;
+      padding: 12px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .status-banner.submitting {
+      display: block;
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    .status-banner.error {
+      display: block;
+      background: rgba(183,28,28,0.25);
+      color: #ef9a9a;
+      border: 1px solid rgba(183,28,28,0.5);
+    }
+
     /* ── Submit ── */
     .submit-row {
       margin-top: 28px;
@@ -189,6 +210,7 @@
       transition: background 0.15s;
     }
     .btn-submit:hover { background: #f57f17; color: white; }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* ── Toast ── */
     .toast {
@@ -222,15 +244,15 @@
 
   <!-- Header -->
   <div class="page-header">
-    <img src="https://c7qp5bn42g-maker.github.io/Franchisee-Portal/jims-electrical-logo.png"
+    <img src="https://raw.githubusercontent.com/assistantfmms/antennas-onboarding/main/Antennas%20and%20Security%20131%20546%20(1)%20(1).png"
          onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'"
-         alt="Jim's Electrical" />
-    <div id="logo-fallback" style="display:none;width:80px;height:80px;background:#0d3f75;border-radius:4px;align-items:center;justify-content:center;flex-shrink:0;">
-      <span style="color:white;font-size:11px;font-weight:bold;text-align:center;line-height:1.3;">Jim's<br>Electrical</span>
+         alt="Jim's Antennas &amp; Security" />
+    <div id="logo-fallback" style="display:none;width:100px;height:60px;background:#0d3f75;border-radius:4px;align-items:center;justify-content:center;flex-shrink:0;">
+      <span style="color:white;font-size:11px;font-weight:bold;text-align:center;line-height:1.4;">Jim's Antennas<br>&amp; Security</span>
     </div>
     <div class="page-header-text">
       <h1>Franchisee Information</h1>
-      <p>Please complete all relevant sections and upload the required images.</p>
+      <p>Please complete all relevant sections and upload the required documents.</p>
     </div>
   </div>
 
@@ -296,7 +318,7 @@
     </div>
 
     <!-- Postal Address -->
-    <div class="section-heading">Postal Address - if different to residential</div>
+    <div class="section-heading">Postal Address – if different to residential</div>
     <div class="field-grid">
       <div class="field-group">
         <label>Street number</label>
@@ -396,8 +418,12 @@
         <input type="text" name="white_card" />
       </div>
       <div class="field-group">
-        <label>Open registration number</label>
-        <input type="text" name="open_reg" />
+        <label>Open cablers licence number</label>
+        <input type="text" name="open_cablers" />
+      </div>
+      <div class="field-group">
+        <label>Structured/fibre cabling registration</label>
+        <input type="text" name="structured_fibre" />
       </div>
       <div class="field-group">
         <label>Security installer number</label>
@@ -406,14 +432,6 @@
       <div class="field-group">
         <label>Security reseller number</label>
         <input type="text" name="sec_reseller" />
-      </div>
-      <div class="field-group">
-        <label>Electrical worker number</label>
-        <input type="text" name="elec_worker" />
-      </div>
-      <div class="field-group">
-        <label>Electrical contractor number</label>
-        <input type="text" name="elec_contractor" />
       </div>
     </div>
 
@@ -474,12 +492,12 @@
 
     <!-- Required Uploads -->
     <div class="section-heading">Required uploads</div>
-    <p class="uploads-note">Please upload clear photos or scans of each required document. If using a mobile you can take a picture of required document using phone camera.</p>
+    <p class="uploads-note">Please upload clear photos or scans of each document. If using a mobile you can take a photo using your phone camera.</p>
 
     <div class="upload-list">
 
       <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <input type="file" accept="image/*" data-label="licence_front" onchange="fileChosen(this)" />
         <div class="upload-row-left">
           <div class="upload-row-title">Driver licence – front</div>
           <div class="upload-row-meta req">Image (required)</div>
@@ -488,7 +506,7 @@
       </div>
 
       <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <input type="file" accept="image/*" data-label="licence_back" onchange="fileChosen(this)" />
         <div class="upload-row-left">
           <div class="upload-row-title">Driver licence – back</div>
           <div class="upload-row-meta req">Image (required)</div>
@@ -497,7 +515,7 @@
       </div>
 
       <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <input type="file" accept="image/*" data-label="vehicle_front" onchange="fileChosen(this)" />
         <div class="upload-row-left">
           <div class="upload-row-title">Vehicle – front</div>
           <div class="upload-row-meta">Image</div>
@@ -506,7 +524,7 @@
       </div>
 
       <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <input type="file" accept="image/*" data-label="vehicle_driver_side" onchange="fileChosen(this)" />
         <div class="upload-row-left">
           <div class="upload-row-title">Vehicle – driver side</div>
           <div class="upload-row-meta">Image</div>
@@ -515,7 +533,7 @@
       </div>
 
       <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <input type="file" accept="image/*" data-label="vehicle_rear" onchange="fileChosen(this)" />
         <div class="upload-row-left">
           <div class="upload-row-title">Vehicle – rear</div>
           <div class="upload-row-meta">Image</div>
@@ -524,7 +542,7 @@
       </div>
 
       <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <input type="file" accept="image/*" data-label="vehicle_passenger_side" onchange="fileChosen(this)" />
         <div class="upload-row-left">
           <div class="upload-row-title">Vehicle – passenger side</div>
           <div class="upload-row-meta">Image</div>
@@ -533,7 +551,7 @@
       </div>
 
       <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <input type="file" accept="image/*" data-label="white_card" onchange="fileChosen(this)" />
         <div class="upload-row-left">
           <div class="upload-row-title">White card</div>
           <div class="upload-row-meta">Image</div>
@@ -542,16 +560,25 @@
       </div>
 
       <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <input type="file" accept="image/*" data-label="open_cablers_licence" onchange="fileChosen(this)" />
         <div class="upload-row-left">
-          <div class="upload-row-title">Open registration</div>
+          <div class="upload-row-title">Open cablers licence</div>
           <div class="upload-row-meta">Image</div>
         </div>
         <div class="upload-row-right">No file selected</div>
       </div>
 
       <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <input type="file" accept="image/*" data-label="structured_fibre_registration" onchange="fileChosen(this)" />
+        <div class="upload-row-left">
+          <div class="upload-row-title">Structured/fibre cabling registration</div>
+          <div class="upload-row-meta">Image</div>
+        </div>
+        <div class="upload-row-right">No file selected</div>
+      </div>
+
+      <div class="upload-row">
+        <input type="file" accept="image/*" data-label="sec_installer_licence" onchange="fileChosen(this)" />
         <div class="upload-row-left">
           <div class="upload-row-title">Security installer licence</div>
           <div class="upload-row-meta">Image</div>
@@ -560,7 +587,7 @@
       </div>
 
       <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
+        <input type="file" accept="image/*" data-label="sec_reseller_licence" onchange="fileChosen(this)" />
         <div class="upload-row-left">
           <div class="upload-row-title">Security reseller licence</div>
           <div class="upload-row-meta">Image</div>
@@ -568,30 +595,14 @@
         <div class="upload-row-right">No file selected</div>
       </div>
 
-      <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
-        <div class="upload-row-left">
-          <div class="upload-row-title">Electrical worker licence</div>
-          <div class="upload-row-meta">Image</div>
-        </div>
-        <div class="upload-row-right">No file selected</div>
-      </div>
-
-      <div class="upload-row">
-        <input type="file" accept="image/*" onchange="fileChosen(this)" />
-        <div class="upload-row-left">
-          <div class="upload-row-title">Electrical contractor licence</div>
-          <div class="upload-row-meta">Image</div>
-        </div>
-        <div class="upload-row-right">No file selected</div>
-      </div>
-
     </div>
+
+    <div class="status-banner" id="statusBanner"></div>
 
     <!-- Submit -->
     <div class="submit-row">
       <button type="button" class="btn-clear" onclick="resetForm()">Clear form</button>
-      <button type="submit" class="btn-submit">Submit application</button>
+      <button type="submit" class="btn-submit" id="submitBtn">Submit application</button>
     </div>
 
   </form>
@@ -599,9 +610,29 @@
 
 <div class="toast" id="toast">✓ Application submitted successfully!</div>
 
+<!-- Firebase v9 compat (CDN) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+
 <script>
+  // ── Firebase config – replace with values from Firebase console ──
+  const firebaseConfig = {
+    apiKey:            "AIzaSyCFq2sUvDfyNGVJDkpXdR0pm104L9tVr8o",
+    authDomain:        "antenna-franchisee-onboarding.firebaseapp.com",
+    projectId:         "antenna-franchisee-onboarding",
+    storageBucket:     "antenna-franchisee-onboarding.firebasestorage.app",
+    messagingSenderId: "213085964304",
+    appId:             "1:213085964304:web:9b3be2854982a6360de295"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db      = firebase.firestore();
+  const storage = firebase.storage();
+
+  // ── UI helpers ──
   function fileChosen(input) {
-    const row = input.closest('.upload-row');
+    const row   = input.closest('.upload-row');
     const right = row.querySelector('.upload-row-right');
     if (input.files && input.files[0]) {
       right.textContent = input.files[0].name;
@@ -619,15 +650,16 @@
       el.classList.remove('chosen');
     });
     document.getElementById('uniform_hint').style.display = 'none';
+    setStatus('');
   }
 
   function updateUniformOptions() {
     const shortsEl = document.getElementById('num_shorts');
     const pantsEl  = document.getElementById('num_pants');
     const hint     = document.getElementById('uniform_hint');
-    const MAX = 3;
-    const shorts = parseInt(shortsEl.value) || 0;
-    const pants  = parseInt(pantsEl.value)  || 0;
+    const MAX      = 3;
+    const shorts   = parseInt(shortsEl.value) || 0;
+    const pants    = parseInt(pantsEl.value)  || 0;
 
     [shortsEl, pantsEl].forEach(sel => {
       const other = sel === shortsEl ? pants : shorts;
@@ -641,11 +673,77 @@
     hint.style.display = (shorts + pants) > MAX ? 'block' : 'none';
   }
 
-  document.getElementById('onboardingForm').addEventListener('submit', function(e) {
+  function setStatus(type, msg) {
+    const banner = document.getElementById('statusBanner');
+    banner.className = 'status-banner' + (type ? ' ' + type : '');
+    banner.textContent = msg || '';
+    banner.style.display = type ? 'block' : 'none';
+  }
+
+  // ── Upload a single file to Firebase Storage, return download URL ──
+  async function uploadFile(file, submissionId, label) {
+    const ext  = file.name.split('.').pop();
+    const path = `franchisee-onboarding/${submissionId}/${label}.${ext}`;
+    const ref  = storage.ref(path);
+    await ref.put(file);
+    return await ref.getDownloadURL();
+  }
+
+  // ── Form submission ──
+  document.getElementById('onboardingForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3500);
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    setStatus('submitting', 'Uploading files and saving your application…');
+
+    try {
+      // Gather text fields
+      const fd   = new FormData(this);
+      const data = {};
+      fd.forEach((v, k) => { if (v) data[k] = v; });
+      data.submitted_at = firebase.firestore.FieldValue.serverTimestamp();
+      data.division      = 'Antennas & Security';
+
+      // Create a submission doc early so we have an ID for file paths
+      const docRef = db.collection('franchisee-onboarding').doc();
+      const submissionId = docRef.id;
+
+      // Upload all chosen files
+      const fileInputs = this.querySelectorAll('input[type="file"]');
+      const uploads    = [];
+      fileInputs.forEach(input => {
+        if (input.files && input.files[0]) {
+          const label = input.dataset.label;
+          uploads.push(
+            uploadFile(input.files[0], submissionId, label).then(url => {
+              data[label + '_url'] = url;
+            })
+          );
+        }
+      });
+      await Promise.all(uploads);
+
+      // Save to Firestore
+      await docRef.set(data);
+
+      // Success
+      setStatus('');
+      submitBtn.disabled = false;
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+      this.reset();
+      document.querySelectorAll('.upload-row-right').forEach(el => {
+        el.textContent = 'No file selected';
+        el.classList.remove('chosen');
+      });
+
+    } catch (err) {
+      console.error(err);
+      submitBtn.disabled = false;
+      setStatus('error', 'Submission failed: ' + err.message + '. Please try again.');
+    }
   });
 </script>
 </body>
